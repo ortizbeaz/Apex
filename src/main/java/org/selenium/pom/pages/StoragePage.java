@@ -75,12 +75,23 @@ public StoragePage(WebDriver driver) {
         driver.findElement(By.cssSelector("#username")).sendKeys(usuario);
         driver.findElement(By.cssSelector("#password")).sendKeys(password);
         driver.findElement(By.cssSelector("button[value='default']")).click();
-        driver.findElement(By.cssSelector("#opc_addressButton")).click();
+        try
+        {
+            String prom = driver.findElement(By.cssSelector(".a-btn.a-btn--action.--secondary.a-checkout__btnPromotion.text-promotions.show")).getText();
+            System.out.println("Tiene una promocion de: "+prom);
+        } catch (NoSuchElementException e) {
+            System.out.println("El articulo no tiene promociones");
+        }
         driver.findElement(By.xpath("//button[@id='submitForOther']")).click();
-
+        try
+        {
+            System.out.println("Compra realizada");
+        }catch (NoSuchElementException e){
+            System.out.println("Error en compra");
+        }
         return this;
     }
-
+//Pruebas Datos de Usuario
     public StoragePage datosUsuario() throws InterruptedException {
         String nombre = "Enrique";
         String apellido = "Ortiz";

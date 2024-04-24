@@ -56,8 +56,8 @@ public class Prueba extends BaseTest {
                 findArticles().filterByPrice(minimo, maximo).
                 selecTv().buyingTv(usuario, password);
 
-               // datosUsuario();
-          //      ;
+
+
 
     }
 
