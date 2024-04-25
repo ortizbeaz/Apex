@@ -60,7 +60,7 @@ public StoragePage(WebDriver driver) {
     driver.findElement(priceMax).sendKeys(maximo);
     driver.findElement(btnPriceFilter).click();
     Thread.sleep(2000);
-    String smartTvEncontradas = driver.findElement(By.cssSelector(".a-plp-results-title")).getText();
+   String smartTvEncontradas = driver.findElement(By.cssSelector(".a-plp-results-title")).getText();
     System.out.println("Productos encontrados despues del Filtro: " +smartTvEncontradas);
     return this;
    }
@@ -163,7 +163,8 @@ public StoragePage(WebDriver driver) {
 
 //////////////Crear Cuenta
        driver.findElement(inicioSesionBtn).click();
-       driver.findElement((btnCrearCuenta)).click();
+        driver.findElement(By.cssSelector("a[class='c8ab37d93 c58e794fd']")).click();
+       //       driver.findElement((btnCrearCuenta)).click();
        driver.findElement(userCreateFld).sendKeys(correoGenerado);
        driver.findElement(pswdCreateFld).sendKeys(passNewUser);
        /////////// Información de usuario

@@ -5,7 +5,7 @@ import org.selenium.pom.pages.HomePage;
 import org.selenium.pom.pages.StoragePage;
 import org.testng.annotations.Test;
 
-import java.util.Random;
+
 
 public class Prueba extends BaseTest {
     @Test
