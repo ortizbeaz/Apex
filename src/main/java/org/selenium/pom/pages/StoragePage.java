@@ -31,13 +31,17 @@ public StoragePage(WebDriver driver) {
 
 //////// function to search articles
     public StoragePage searchArticle(String searchFor){
+
     driver.findElement(searchFld).sendKeys(searchFor);
     driver.findElement(searchFld).sendKeys(Keys.ENTER);
     return this;
     }
 
    public StoragePage findArticles(){
-        try{
+      // WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+       //wait.until(ExpectedConditions.visibilityOf((WebElement) articleFoundSelector));
+    try{
+
             String articleQuantity = driver.findElement(articleFoundSelector).getText();
                 System.out.println("/////////////////////////////////");
                 System.out.println(articleQuantity);
@@ -45,7 +49,9 @@ public StoragePage(WebDriver driver) {
 
 
         }catch (NoSuchElementException e){
-            System.out.println("Articulo no encontrado");
+
+        System.out.println("Articulo no encontrado");
+
         }
         return this;
    }
@@ -59,7 +65,10 @@ public StoragePage(WebDriver driver) {
     driver.findElement(priceMin).sendKeys(minimo);
     driver.findElement(priceMax).sendKeys(maximo);
     driver.findElement(btnPriceFilter).click();
-    Thread.sleep(2000);
+    //wait until filter text appears
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='plp-head-filter'] a")));
+
    String smartTvEncontradas = driver.findElement(By.cssSelector(".a-plp-results-title")).getText();
     System.out.println("Productos encontrados despues del Filtro: " +smartTvEncontradas);
     return this;
@@ -200,7 +209,7 @@ public StoragePage(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement sesionInic = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='a-header__topLink popover-session']")));
        String txtInicioSesion = driver.findElement(By.xpath("//span[@class='a-header__topLink popover-session']")).getText();
-        System.out.println("Lo que está detectando es: "+txtInicioSesion);
+      //  System.out.println("Lo que está detectando es: "+txtInicioSesion);
 
      if(Objects.equals(txtInicioSesion, "Hola Nombre")){
           System.out.println("Usuario logeado");
