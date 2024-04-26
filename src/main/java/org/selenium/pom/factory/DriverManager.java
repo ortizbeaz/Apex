@@ -10,7 +10,7 @@ String urlPagina = "https://liverpool.com.mx/tienda/home";
     public WebDriver initializeDriver(){
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
         driver.get(urlPagina);
         return driver;
     }
