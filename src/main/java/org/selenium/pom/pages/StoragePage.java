@@ -17,9 +17,7 @@ private final By armaniBtnId = By.id("brand-A/X ARMANI EXCHANGE");
 private final By priceMin = By.id("min-price-filter");
 private final By priceMax = By.id("max-price-filter");
 private final By btnPriceFilter = By.cssSelector(".a-price__filterButton");
-private final By smartTvEncontradasPrecioSelector = By.cssSelector(".a-plp-results-title");
 private final By inicioSesionBtn=By.cssSelector("span[class='a-header__topLink']");
-private final By btnCrearCuenta = By.cssSelector("a[class='c0ce114f8 c1fd98bd1']");
 private final By userCreateFld = By.xpath("//input[@id='email']");
 private final By pswdCreateFld = By.xpath("//input[@id='password']");
 private final By btnNuevaCuenta = By.xpath("//button[.='Crear cuenta']");
@@ -31,13 +29,16 @@ public StoragePage(WebDriver driver) {
 
 //////// function to search articles
     public StoragePage searchArticle(String searchFor){
+
     driver.findElement(searchFld).sendKeys(searchFor);
     driver.findElement(searchFld).sendKeys(Keys.ENTER);
     return this;
     }
 
    public StoragePage findArticles(){
-        try{
+
+    try{
+
             String articleQuantity = driver.findElement(articleFoundSelector).getText();
                 System.out.println("/////////////////////////////////");
                 System.out.println(articleQuantity);
@@ -45,7 +46,9 @@ public StoragePage(WebDriver driver) {
 
 
         }catch (NoSuchElementException e){
-            System.out.println("Articulo no encontrado");
+
+        System.out.println("Articulo no encontrado");
+
         }
         return this;
    }
@@ -55,11 +58,14 @@ public StoragePage(WebDriver driver) {
     return this;
    }
 
-   public StoragePage filterByPrice(String minimo, String maximo) throws InterruptedException {
+   public StoragePage filterByPrice(String minimo, String maximo) {
     driver.findElement(priceMin).sendKeys(minimo);
     driver.findElement(priceMax).sendKeys(maximo);
     driver.findElement(btnPriceFilter).click();
-    Thread.sleep(2000);
+    //wait until filter text appears
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[class='plp-head-filter'] a")));
+
    String smartTvEncontradas = driver.findElement(By.cssSelector(".a-plp-results-title")).getText();
     System.out.println("Productos encontrados despues del Filtro: " +smartTvEncontradas);
     return this;
@@ -91,58 +97,6 @@ public StoragePage(WebDriver driver) {
         }
         return this;
     }
-//Pruebas Datos de Usuario
-    public StoragePage datosUsuario() throws InterruptedException {
-        String nombre = "Enrique";
-        String apellido = "Ortiz";
-        String aliasDireccion = "Casa";
-        String codigoPostal = "87000";
-        String estado = "TAMULIPAS";
-        String ciudad = "VICTORIA";
-        String colonia = "ARCOIRIS";
-        String calle ="Calle 100";
-        String num = "888";
-        String telefonoCelular ="8341663946";
-        String telefonoFijo ="8343160430";
-        Thread.sleep(2000);
-        driver.findElement(By.cssSelector(".a-btn.a-btn--tertiary.d-none.d-sm-block.font-weight-bold")).click();
-        driver.findElement(By.xpath("//input[@labeltext='Nombre']")).sendKeys(nombre);
-        driver.findElement(By.xpath("//input[@labeltext='Apellido Paterno']")).sendKeys(apellido);
-        driver.findElement(By.xpath("//input[@labeltext='Alias de la dirección']")).sendKeys(aliasDireccion);
-        driver.findElement(By.xpath("//input[@labeltext='Código Postal']")).sendKeys(codigoPostal);
-       driver.findElement(By.xpath("//input[@name='city']")).sendKeys(ciudad);
-        // WebElement dropEstado = driver.findElement(By.xpath("//select[@name='stateId']"));
-        //Select dropdownEstado = new Select(dropEstado);
-       // dropdownEstado.selectByValue();
-        driver.findElement(By.xpath("//input[@name='street']")).sendKeys(calle);
-/*        WebElement dropCiudad = driver.findElement(By.xpath("//select[@name='municipality']"));
-        Select dropdownCiudad = new Select(dropCiudad);
-        dropdownCiudad.selectByValue(ciudad);*/
-       // WebElement dropColonia = driver.findElement(By.xpath("//select[@name='colony']"));
-        //Select dropdownColonia = new Select(dropColonia);
-       // dropdownColonia.selectByValue(colonia);
-        driver.findElement(By.xpath("//input[@name='noExt']")).sendKeys(num);
-        driver.findElement(By.cssSelector("div[class='col-sm-6 col-lg-2 mt-2 mt-lg-0 buttonAddAdressWeb'] button[class='a-btn a-btn--primary']")).click();
-        driver.findElement(By.xpath("//input[@labeltext='Teléfono Celular']")).sendKeys(telefonoCelular);
-        driver.findElement(By.xpath("//input[@labeltext='Teléfono Fijo']")).sendKeys(telefonoFijo);
-        driver.findElement(By.xpath("//div[@class='col-sm-6 col-lg-2 mt-2 mt-lg-0 buttonAddAdressWeb']")).click();
-
-        return this;
-    }
-
-
-    public StoragePage promocion(){
-        try
-        {
-           String prom = driver.findElement(By.cssSelector(".a-btn.a-btn--action.--secondary.a-checkout__btnPromotion.text-promotions.show")).getText();
-            System.out.println("Tiene una promocion de: "+prom);
-        } catch (NoSuchElementException e) {
-            System.out.println("El articulo no tiene promociones");
-        }
-        return this;
-    }
-
-
 
 /////////////////////////////////////////////////Generar cuenta
     public StoragePage createAccount() {
@@ -200,7 +154,6 @@ public StoragePage(WebDriver driver) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         WebElement sesionInic = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='a-header__topLink popover-session']")));
        String txtInicioSesion = driver.findElement(By.xpath("//span[@class='a-header__topLink popover-session']")).getText();
-        System.out.println("Lo que está detectando es: "+txtInicioSesion);
 
      if(Objects.equals(txtInicioSesion, "Hola Nombre")){
           System.out.println("Usuario logeado");

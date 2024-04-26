@@ -41,7 +41,7 @@ public class Prueba extends BaseTest {
     }
 
     @Test
-    public  void TS02_TC01() throws InterruptedException {
+    public  void TS02_TC01() {
         String searchFor = "Smart Tv";
         String minimo = "6000";
         String maximo = "10000";
